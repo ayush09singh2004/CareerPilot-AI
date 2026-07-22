@@ -1,0 +1,199 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ══════════════════════════════════════════════════════════════
+   CSS Custom Properties — drive the Tailwind semantic tokens
+   ══════════════════════════════════════════════════════════════ */
+:root {
+  --color-bg:           #FFFFFF;
+  --color-secondary-bg: #F8FAFC;
+  --color-text:         #111827;
+  --color-border:       #E5E7EB;
+}
+
+.dark {
+  --color-bg:           #0f172a;    /* slate-950 */
+  --color-secondary-bg: #1e293b;    /* slate-800 */
+  --color-text:         #f1f5f9;    /* slate-100 */
+  --color-border:       #334155;    /* slate-700 */
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Base
+   ══════════════════════════════════════════════════════════════ */
+@layer base {
+  /* Ensure h-screen works correctly across all browsers */
+  html {
+    height: 100%;
+  }
+  body, #root {
+    height: 100%;
+    @apply bg-background text-textMain font-sans antialiased;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Smooth theme transition
+   Only active during the brief window when switching themes.
+   Applied / removed via JS in ThemeContext.
+   ══════════════════════════════════════════════════════════════ */
+.theme-transitioning,
+.theme-transitioning *,
+.theme-transitioning *::before,
+.theme-transitioning *::after {
+  transition:
+    background-color 0.25s ease,
+    border-color     0.25s ease,
+    color            0.2s  ease,
+    fill             0.2s  ease,
+    stroke           0.2s  ease,
+    box-shadow       0.2s  ease !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   Animations (pre-existing)
+   ══════════════════════════════════════════════════════════════ */
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to   { opacity: 1; transform: scale(1)    translateY(0);   }
+}
+.animate-in { animation: modalIn 0.2s ease-out both; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to   { opacity: 1; transform: translateX(0);    }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   DARK MODE — Global utility overrides
+   .dark .{class} has higher specificity (0,2,0) than .{class} (0,1,0)
+   so these override Tailwind utilities without !important.
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Backgrounds ────────────────────────────────────────────── */
+.dark .bg-white              { background-color: #1e293b; }
+.dark .bg-gray-50            { background-color: #0f172a; }
+.dark .bg-gray-100           { background-color: #1e293b; }
+.dark .bg-gray-200           { background-color: #334155; }
+.dark .bg-gray-800           { background-color: #020617; }
+.dark .bg-gray-900           { background-color: #020617; }
+.dark .bg-blue-50            { background-color: #0c2040; }
+.dark .bg-green-50           { background-color: #052e16; }
+.dark .bg-red-50             { background-color: #3b1219; }
+.dark .bg-yellow-50          { background-color: #422006; }
+.dark .bg-purple-50          { background-color: #2e1065; }
+.dark .bg-orange-50          { background-color: #431407; }
+.dark .bg-green-100          { background-color: #14532d; }
+.dark .bg-yellow-100         { background-color: #713f12; }
+.dark .bg-red-100            { background-color: #450a0a; }
+.dark .bg-blue-100           { background-color: #1e3a5f; }
+
+/* background with opacity (slash syntax generates bg-{color}/{n} classes) */
+.dark .bg-blue-50\/50        { background-color: rgba(12,32,64,0.5); }
+.dark .bg-gray-50\/60        { background-color: rgba(15,23,42,0.6); }
+
+/* ── Text ────────────────────────────────────────────────────── */
+.dark .text-gray-900         { color: #f1f5f9; }
+.dark .text-gray-800         { color: #e2e8f0; }
+.dark .text-gray-700         { color: #cbd5e1; }
+.dark .text-gray-600         { color: #94a3b8; }
+.dark .text-gray-500         { color: #64748b; }
+.dark .text-gray-400         { color: #475569; }
+.dark .text-gray-300         { color: #334155; }
+.dark .text-green-700        { color: #86efac; }
+.dark .text-green-500        { color: #4ade80; }
+.dark .text-red-700          { color: #fca5a5; }
+.dark .text-red-600          { color: #f87171; }
+.dark .text-red-500          { color: #ef4444; }
+.dark .text-red-400          { color: #f87171; }
+.dark .text-blue-700         { color: #93c5fd; }
+.dark .text-blue-600         { color: #60a5fa; }
+.dark .text-blue-500         { color: #60a5fa; }
+.dark .text-yellow-700       { color: #fde047; }
+.dark .text-yellow-600       { color: #facc15; }
+.dark .text-purple-600       { color: #c084fc; }
+
+/* ── Borders ─────────────────────────────────────────────────── */
+.dark .border-gray-100       { border-color: #1e293b; }
+.dark .border-gray-200       { border-color: #334155; }
+.dark .border-gray-300       { border-color: #475569; }
+.dark .border-red-100        { border-color: #450a0a; }
+.dark .border-red-200        { border-color: #7f1d1d; }
+.dark .border-red-300        { border-color: #991b1b; }
+.dark .border-green-100      { border-color: #052e16; }
+.dark .border-blue-100       { border-color: #1e3a5f; }
+.dark .border-blue-200       { border-color: #1e3a5f; }
+.dark .border-yellow-200     { border-color: #713f12; }
+.dark .border-dashed         { opacity: 0.6; }
+
+/* ── Hover overrides ─────────────────────────────────────────── */
+.dark .hover\:bg-gray-50:hover     { background-color: #1e293b; }
+.dark .hover\:bg-gray-100:hover    { background-color: #334155; }
+.dark .hover\:bg-blue-50:hover     { background-color: #0c2040; }
+.dark .hover\:bg-red-50:hover      { background-color: #3b1219; }
+.dark .hover\:bg-green-50:hover    { background-color: #052e16; }
+.dark .hover\:bg-black:hover       { background-color: #020617; }
+.dark .hover\:bg-blue-700:hover    { background-color: #1d4ed8; }
+.dark .hover\:text-gray-600:hover  { color: #94a3b8; }
+.dark .hover\:text-gray-900:hover  { color: #f1f5f9; }
+.dark .hover\:border-primary\/40:hover { border-color: rgba(37,99,235,0.4); }
+
+/* ── Shadows ─────────────────────────────────────────────────── */
+.dark .shadow-soft { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.5); }
+.dark .shadow-md   { box-shadow: 0 4px 6px -1px rgba(0,0,0,0.4); }
+.dark .shadow-lg   { box-shadow: 0 10px 15px -3px rgba(0,0,0,0.5); }
+.dark .shadow-xl   { box-shadow: 0 20px 25px -5px rgba(0,0,0,0.5); }
+
+/* ── Form inputs ─────────────────────────────────────────────── */
+.dark input:not([type="file"]):not([type="checkbox"]):not([type="radio"]),
+.dark textarea,
+.dark select {
+  background-color: #0f172a;
+  color:            #f1f5f9;
+  border-color:     #334155;
+}
+.dark input::placeholder,
+.dark textarea::placeholder { color: #475569; }
+.dark input:disabled,
+.dark input[readonly] {
+  background-color: #1e293b;
+  color: #64748b;
+}
+/* Style native select option dropdown */
+.dark select option {
+  background-color: #1e293b;
+  color: #f1f5f9;
+}
+
+/* ── Scrollbar ───────────────────────────────────────────────── */
+.dark ::-webkit-scrollbar              { width: 6px; height: 6px; }
+.dark ::-webkit-scrollbar-track        { background: #1e293b; }
+.dark ::-webkit-scrollbar-thumb        { background: #475569; border-radius: 999px; }
+.dark ::-webkit-scrollbar-thumb:hover  { background: #64748b; }
+
+/* ══════════════════════════════════════════════════════════════
+   PROTECT: Resume PDF preview — always renders as a white printable page
+   Use !important because the pdf-doc class is a nested boundary
+   ══════════════════════════════════════════════════════════════ */
+.resume-pdf-doc { color-scheme: light; }
+
+.dark .resume-pdf-doc                    { background-color: white !important; color: #111827 !important; }
+.dark .resume-pdf-doc .bg-white          { background-color: white        !important; }
+.dark .resume-pdf-doc .bg-gray-50        { background-color: #f9fafb      !important; }
+.dark .resume-pdf-doc .bg-gray-100       { background-color: #f3f4f6      !important; }
+.dark .resume-pdf-doc .bg-gray-200       { background-color: #e5e7eb      !important; }
+.dark .resume-pdf-doc .bg-gray-800       { background-color: #1f2937      !important; }
+.dark .resume-pdf-doc .bg-gray-900       { background-color: #111827      !important; }
+.dark .resume-pdf-doc .text-gray-900     { color: #111827 !important; }
+.dark .resume-pdf-doc .text-gray-800     { color: #1f2937 !important; }
+.dark .resume-pdf-doc .text-gray-700     { color: #374151 !important; }
+.dark .resume-pdf-doc .text-gray-600     { color: #4b5563 !important; }
+.dark .resume-pdf-doc .text-gray-500     { color: #6b7280 !important; }
+.dark .resume-pdf-doc .text-white        { color: white   !important; }
+.dark .resume-pdf-doc .border-gray-100   { border-color: #f3f4f6 !important; }
+.dark .resume-pdf-doc .border-gray-200   { border-color: #e5e7eb !important; }
+.dark .resume-pdf-doc .border-gray-300   { border-color: #d1d5db !important; }
+.dark .resume-pdf-doc input,
+.dark .resume-pdf-doc select,
+.dark .resume-pdf-doc textarea           { background-color: white !important; color: #111827 !important; border-color: #d1d5db !important; }

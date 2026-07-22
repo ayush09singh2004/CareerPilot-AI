@@ -1,0 +1,29 @@
+import React from 'react';
+
+const Input = ({
+  label,
+  type = 'text',
+  error,
+  className = '',
+  ...props
+}) => {
+  return (
+    <div className="w-full">
+      {label && (
+        <label className="block text-sm font-medium text-gray-700 mb-1">
+          {label}
+        </label>
+      )}
+      <input
+        type={type}
+        className={`w-full px-4 py-3 rounded-xl border border-borderMain focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all bg-white ${
+          error ? 'border-error focus:ring-error/20 focus:border-error' : ''
+        } ${className}`}
+        {...props}
+      />
+      {error && <p className="mt-1 text-sm text-error">{error}</p>}
+    </div>
+  );
+};
+
+export default Input;
